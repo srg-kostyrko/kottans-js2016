@@ -1,0 +1,15 @@
+{
+  "name": "posthtml-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tape tests/*"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "posthtml": "^0.8.7",
+    "tape": "^4.5.1"
+  }
+}
