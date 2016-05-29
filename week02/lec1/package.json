@@ -1,0 +1,21 @@
+{
+  "name": "lec1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "postcss --config postcss.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "cssnano": "^3.6.2",
+    "postcss": "^5.0.21",
+    "postcss-cli": "^2.5.2",
+    "postcss-font-magician": "^1.4.0",
+    "postcss-inline-svg": "^1.4.0",
+    "postcss-input-range": "^2.0.0",
+    "postcss-nested": "^1.0.0"
+  }
+}

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Order form</title>
+<link href="styles/main.min.css" rel="stylesheet">
+<header>
+    <a href="#" class="go-back" role="button">go back</a>
+    <a href="#" class="logo">
+        <img src="img/logo.jpg" alt="Logo">
+    </a>
+    <a href="#" class="sign-in" role="button">sign in</a>
+</header>
+<main>
+    <form class="checkout-form">
+        <section class="order-details">
+            <h1>your order</h1>
+            <dl>
+                <dt>items</dt>
+                <dd>2 documents</dd>
+                <dt>details</dt>
+                <dd>2 languages</dd>
+                <dt>price</dt>
+                <dd>$ 696.06</dd>
+                <dt>delivery</dt>
+                <dd>48 hours</dd>
+            </dl>
+            <div class="order-buttons">
+                <button type="submit" class="place-order">place order</button>
+                <button type="submit" class="print-quote">print a quote</button>
+            </div>
+        </section>
+        <section class="help-center">
+            <h1>help center</h1>
+            <p>
+                If you need assistance while placing your order, contact one of our beloved
+                Project Manager by phone or email.
+            </p>
+            <address>
+                <a href="tel:+971(0)555555">+971 (0) 555 555</a>
+                <a href="mailto:help@qtest.com">help@qtest.com</a>
+            </address>
+        </section>
+        <section class="translation-selector">
+            <h1>select what you want to translate</h1>
+            <div class="translation-selector-wrapper">
+                <a href="#">
+                    <input type="radio" name="translation-type" id="translation-type-website" value="website">
+                    <label for="translation-type-website">
+                        <figure>
+                            <img src="img/website.jpg" alt="">
+                            <figcaption>Website</figcaption>
+                        </figure>
+                    </label>
+                </a>
+                <a href="#">
+                    <input type="radio" name="translation-type" id="translation-type-document" value="document" checked>
+                    <label for="translation-type-document">
+                        <figure>
+                            <img src="img/document.jpg" alt="">
+                            <figcaption>Document</figcaption>
+                        </figure>
+                    </label>
+                </a>
+                <a href="#">
+                    <input type="radio" name="translation-type" id="translation-type-social" value="social">
+                    <label for="translation-type-social">
+                        <figure>
+                            <img src="img/social.jpg" alt="">
+                            <figcaption>Document</figcaption>
+                        </figure>
+                    </label>
+                </a>
+            </div>
+        </section>
+        <section class="upload-documents">
+            <h1>Upload your documents <small>(Doc, Docx, Text, PDF, Markdown)</small></h1>
+            <label for="uploader" role="button" class="upload-file">Upload a new file</label>
+            <input type="file" id="uploader">
+            <table>
+                <thead>
+                    <tr>
+                        <th>file name</th>
+                        <th>file size</th>
+                        <th>number of words</th>
+                        <th>remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="business_operations.docx">business_operations.docx</a>
+                        </td>
+                        <td>
+                            <data value="78kB">78kb</data>
+                        </td>
+                        <td>
+                            <data value="842">842</data>
+                        </td>
+                        <td>
+                            <button class="remove" aria-label="Remove"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="business_financial.docx">business_financial.docx</a>
+                        </td>
+                        <td>
+                            <data value="26kB">26kb</data>
+                        </td>
+                        <td>
+                            <data value="2326">2,326</data>
+                        </td>
+                        <td>
+                            <button class="remove" aria-label="Remove"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="language-pairings">
+            <h1>Choose your language pairings</h1>
+            <label>From</label>
+            <select class="language-selector">
+                <option value="en"English></option>
+            </select>
+            <label>To</label>
+            <select class="language-selector">
+                <option value="ar">Arabic></option>
+                <option value="ku">Kurdish></option>
+            </select>
+            <select class="language-selector">
+                <option value="ar">Arabic></option>
+                <option value="ku">Kurdish></option>
+            </select>
+            <button class="add-language">add</button>
+        </section>
+        <section class="desired-tone">
+            <h1>Select your desired tone</h1>
+            <div class="tone-selection-wrapper">
+                <input type="radio" name="translation-tone" id="translation-tone-friendly" value="friendly">
+                <label for="translation-tone-friendly">
+                    Friendly / Casual
+                </label>
+                <input type="radio" name="translation-tone" id="translation-tone-corporate" value="corporate" checked>
+                <label for="translation-tone-corporate">
+                    Corporate / Pro
+                </label>
+                <input type="radio" name="translation-tone" id="translation-tone-media" value="media">
+                <label for="translation-tone-media">
+                    Media / Formal
+                </label>
+            </div>
+        </section>
+        <section class="job-urgency">
+            <h1>Tell us how urgent this job is</h1>
+            <input type="range" min="0" max="2" value="1">
+            <label>i got time</label>
+            <label>average</label>
+            <label>yesterday</label>
+            <section class="timeline-info">
+                <h1>timeline info</h1>
+                With an <strong>average</strong> timeline set up, our expert translator can take a
+                reasonable amount of time perfecting your translation.
+            </section>
+        </section>
+        <section class="signup-payment">
+            <h1>Sign up and choose a payment method</h1>
+            <p>Already have an account with us? <a href="/">Sign in</a>.</p>
+            <div class="fullname-wrapper">
+                <label for="fullname">full name</label>
+                <input type="text" id="fullname" required>
+            </div>
+            <div class="email-wrapper">
+                <label for="email">email address</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="password-wrapper">
+                <label for="password">choose a password</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="payment-selector-wrapper">
+                <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked>
+                <label for="credit-card"><img src="img/cc.jpg" alt="Credit card"></label>
+                <input type="radio" name="payment-method" value="paypal" id="paypal">
+                <label for="paypal"><img src="img/paypal.jpg" alt="Paypal"></label>
+                <input type="radio" name="payment-method" value="amazon" id="amazon">
+                <label for="amazon"><img src="img/amazone.jpg" alt="Amazon.com"></label>
+            </div>
+            <div class="credit-card-wrapper">
+                <label for="credit-card-number">card number</label>
+                <input type="text" id="credit-card-number">
+            </div>
+            <div class="expiry-date-wrapper">
+                <label for="expiry-date">expiry date</label>
+                <input type="date" id="expiry-date" placeholder="DD/MM/YY">
+            </div>
+            <div class="cvv-code-wrapper">
+                <label for="expiry-date">code</label>
+                <input type="password" id="cvv-code">
+            </div>
+        </section>
+        <section class="order-submitting">
+            <input type="checkbox" checked id="terms-conditions">
+            <label for="terms-conditions">I agree to the <a href="/">Terms & conditions</a></label>
+            <button type="submit" class="place-order">place order</button>
+            <button type="submit" class="print-quote">print a quote</button>
+        </section>
+    </form>
+</main>
+<footer>
+    <div class="footer-wrapper">
+        <section class="about-us">
+            <h1>what we do</h1>
+            <p>
+                We provide a full range of language services including content development,
+                document, website and social media account translation.
+            </p>
+        </section>
+        <section class="address">
+            <h1>our main office</h1>
+            <address>
+                Dubai, UAE<br>
+                P.O.Box: 502735<br>
+                Phone: <a href="tel:+971(0)44278128">+971(0)44278128</a>
+            </address>
+        </section>
+        <section class="connect">
+            <h1>connect with us</h1>
+            <ul>
+                <li><a href="#" class="facebook">Facebook</a></li>
+                <li><a href="#" class="twitter">Twitter</a></li>
+                <li><a href="#" class="linkedin">LinkedIn</a></li>
+            </ul>
+        </section>
+        <section class="logo">
+            <img src="img/logo.jpg" alt="logo">
+        </section>
+    </div>
+</footer>

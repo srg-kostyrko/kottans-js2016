@@ -1,0 +1,16 @@
+{
+  "use": [
+    "postcss-input-range",
+    "postcss-nested",
+    "postcss-font-magician",
+    "postcss-inline-svg",
+    "autoprefixer",
+    "cssnano"
+  ],
+  "input": "styles/main.css",
+  "output": "styles/main.min.css",
+  "local-plugins": true,
+  "autoprefixer": {
+    "browsers": "> 5%"
+  }
+}
