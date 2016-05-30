@@ -43,33 +43,27 @@
         <section class="translation-selector">
             <h1>select what you want to translate</h1>
             <div class="translation-selector-wrapper">
-                <a href="#">
-                    <input type="radio" name="translation-type" id="translation-type-website" value="website">
-                    <label for="translation-type-website">
-                        <figure>
-                            <img src="img/website.jpg" alt="">
-                            <figcaption>Website</figcaption>
-                        </figure>
-                    </label>
-                </a>
-                <a href="#">
-                    <input type="radio" name="translation-type" id="translation-type-document" value="document" checked>
-                    <label for="translation-type-document">
-                        <figure>
-                            <img src="img/document.jpg" alt="">
-                            <figcaption>Document</figcaption>
-                        </figure>
-                    </label>
-                </a>
-                <a href="#">
-                    <input type="radio" name="translation-type" id="translation-type-social" value="social">
-                    <label for="translation-type-social">
-                        <figure>
-                            <img src="img/social.jpg" alt="">
-                            <figcaption>Document</figcaption>
-                        </figure>
-                    </label>
-                </a>
+                <input type="radio" name="translation-type" id="translation-type-website" value="website">
+                <label for="translation-type-website">
+                    <figure>
+                        <img src="img/website.jpg" alt="">
+                        <figcaption>Website</figcaption>
+                    </figure>
+                </label>
+                <input type="radio" name="translation-type" id="translation-type-document" value="document" checked>
+                <label for="translation-type-document">
+                    <figure>
+                        <img src="img/document.jpg" alt="">
+                        <figcaption>Document</figcaption>
+                    </figure>
+                </label>
+                <input type="radio" name="translation-type" id="translation-type-social" value="social">
+                <label for="translation-type-social">
+                    <figure>
+                        <img src="img/social.jpg" alt="">
+                        <figcaption>Document</figcaption>
+                    </figure>
+                </label>
             </div>
         </section>
         <section class="upload-documents">
@@ -121,7 +115,7 @@
             <h1>Choose your language pairings</h1>
             <label>From</label>
             <select class="language-selector">
-                <option value="en"English></option>
+                <option value="en">English></option>
             </select>
             <label>To</label>
             <select class="language-selector">
@@ -154,9 +148,11 @@
         <section class="job-urgency">
             <h1>Tell us how urgent this job is</h1>
             <input type="range" min="0" max="2" value="1">
-            <label>i got time</label>
-            <label>average</label>
-            <label>yesterday</label>
+            <div class="range-labels">
+              <label>i got time</label>
+              <label>average</label>
+              <label>yesterday</label>
+            </div>
             <section class="timeline-info">
                 <h1>timeline info</h1>
                 With an <strong>average</strong> timeline set up, our expert translator can take a

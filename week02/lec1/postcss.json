@@ -1,6 +1,8 @@
 {
   "use": [
-    "postcss-input-range",
+    "postcss-mixins",
+    "postcss-simple-vars",
+    "postcss-input-style",
     "postcss-nested",
     "postcss-font-magician",
     "postcss-inline-svg",

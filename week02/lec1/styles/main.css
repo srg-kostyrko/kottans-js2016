@@ -3,37 +3,121 @@ body {
     all: unset;
 }
 
-a, h1, fieldset, dl, dt, dd, button, label {
+a, fieldset, dl, dt, dd, button, label, address {
     all: unset;
+}
+h1 {
+  margin: 0;
+  font-weight: normal;
 }
 
 section {
     box-sizing: border-box;
 }
-input[type="range"], input[type="range"]::range-track, input[type="range"]::range-thumb {
+input[type="range"], input[type="range"]::track, input[type="range"]::thumb {
     appearance: none;
 }
+
+/********** vars **********/
+
+$text-color: #6e768f;
+$text-color-lighter: #a5aacb;
+$border-color: #d7d9e0;
+$light-background: #f7f7fa;
+$highlight-color: #76a7e1;
 
 /***********/
 
 body {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: initial;
     justify-content: flex-start;
     flex-wrap: wrap;
 
     background: #eceef4;
-    font-family: "Droid Sans";
-    color: #6e768f;
+    font-family: "Roboto";
+    font-size: 12px;
+    color: $text-color-lighter;
 }
 
 header, main {
     margin-left: auto;
     margin-right: auto;
-    flex-basis: 940px;
+    max-width: 940px;
     flex-grow: 0;
     flex-shrink: 1;
+    width: 100%;
+}
+
+/****** mixins *************/
+@define-mixin icon-inline $name, $color {
+    &::before {
+      content: '';
+      background-size: cover;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+      vertical-align: text-bottom;
+      background-image: svg-load(icons/$(name).svg, fill=$color);
+    }
+}
+
+@define-mixin icon-outer $name, $color {
+    position: relative;
+    &::before {
+      content: '';
+      border: none;
+      border-radius: 0;
+      background-image: svg-load(icons/$(name).svg, fill=$color);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      left: -28px;
+      top: -2px;
+      width: 18px;
+      height: 18px;
+    }
+}
+
+@define-mixin radio {
+  & input[type=radio] {
+      display: none;
+  }
+  & label {
+      padding: 20px 30px;
+      border: 1px solid $border-color;
+      border-radius: 3px;
+      background: $light-background;
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+  }
+
+  & [type=radio]:checked + label {
+      border: 5px solid $highlight-color;
+      box-sizing: border-box;
+      border-radius: 3px;
+  }
+
+  & [type=radio]:checked + label::after {
+      display: inline-block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      content: "";
+      background-image: svg-load(icons/mark.svg, fill=#fff);
+      background-position: center;
+      background-size: 65%;
+      background-color: $highlight-color;
+      background-repeat: no-repeat;
+      top: -10px;
+      right: -10px;
+      border-radius: 50%;
+  }
 }
 
 /********/
@@ -47,31 +131,21 @@ header {
 
 .go-back, .sign-in {
     text-transform: uppercase;
-    color: #a5abc5;
+    color: $text-color-lighter;
     border: 1px solid #c9d0e1;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 500;
     padding: 15px 35px;
 }
-
-.go-back::before, .sign-in::before {
-    content: '';
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    vertical-align: text-bottom;
+.go-back {
+  @mixin icon-inline arrow, $text-color-lighter;
 }
-
+.sign-in {
+  @mixin icon-inline user, $text-color-lighter;
+}
 .go-back::before {
-    background-image: svg-load(icons/arrow.svg, fill=#a5abc5);
     transform: scaleX(-1);
-}
-
-.sign-in::before {
-    background-image: svg-load(icons/user.svg, fill=#a5abc5);
 }
 
 /********/
@@ -87,24 +161,27 @@ header {
 
 .checkout-form > section {
     flex-basis: 100%;
-    padding: 20px 30px 20px 50px;
+    padding: 20px 30px 20px 90px;
     counter-increment: section;
 }
 
 .checkout-form > section > h1 {
     display: block;
     position: relative;
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: $text-color;
 }
 
 .checkout-form > section > h1::before {
     content: counter(section);
-    border: 1px solid #6e768f;
+    border: 1px solid $text-color;
     position: absolute;
     width: 30px;
     height: 30px;
-    border-radius: 15px;
+    border-radius: 50%;
     text-align: center;
-    left: -35px;
+    left: -55px;
     top: -7px;
     box-sizing: border-box;
     padding-top: 7px;
@@ -119,9 +196,9 @@ header {
     flex-direction: column;
     flex-wrap: wrap;
     align-content: space-between;
-    justify-content: space-around;
+    justify-content: flex-start;;
 
-    height: 140px;
+    height: 135px;
     box-sizing: border-box;
     border-right: 1px solid #c9d0e1;
     border-bottom: 1px solid #c9d0e1;
@@ -130,23 +207,14 @@ header {
 
 .checkout-form .order-details h1 {
     width: 60%;
+    margin-bottom: 20px;
     position: relative;
 
+    font-size: 14px;
     text-transform: uppercase;
     font-weight: bold;
-}
 
-.checkout-form .order-details h1::before {
-    content: '';
-    border: none;
-    border-radius: 0;
-    background-image: svg-load(icons/clipboard.svg, fill=#6e768f);
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
+    @mixin icon-outer clipboard, $text-color;
 }
 
 .checkout-form .order-details dl {
@@ -155,8 +223,15 @@ header {
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-between;
-    align-content: space-around;
-    height: 50px;
+    align-content: space-between;
+    height: 40px;
+}
+.checkout-form .order-details dt {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.checkout-form .order-details dd {
+  color: $text-color-lighter;
 }
 
 .checkout-form .order-details .order-buttons {
@@ -174,25 +249,24 @@ header {
 
     padding: 20px 30px 20px 50px;
     border-bottom: 1px solid #c9d0e1;
+    font-size: 11px;
+}
+
+.checkout-form .help-center p {
+  color: $text-color-lighter;
+}
+.checkout-form .help-center address a {
+  margin-right: 10px;
 }
 
 .checkout-form .help-center h1 {
     text-transform: uppercase;
     font-weight: bold;
     position: relative;
-}
+    font-size: 14px;
+    margin-bottom: 0;
 
-.checkout-form .help-center h1::before {
-    content: '';
-    border: none;
-    border-radius: 0;
-    background-image: svg-load(icons/lifebuoy.svg, fill=#6e768f);
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
+    @mixin icon-outer lifebuoy, $text-color;
 }
 
 .checkout-form .translation-selector {
@@ -206,8 +280,11 @@ header {
 
 .checkout-form .translation-selector h1 {
     text-transform: uppercase;
-    border-bottom: 1px solid #6e768f;
-    margin-bottom: 15px;
+    font-size: 18px;
+    letter-spacing: 3px;
+    font-weight: 400;
+    border-bottom: 1px solid $text-color;
+    margin-bottom: 25px;
     padding-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
@@ -226,44 +303,8 @@ header {
     flex-basis: 25%;
 }
 
-.checkout-form .translation-selector-wrapper [type=radio] {
-    display: none;
-}
-
-.checkout-form .translation-selector-wrapper label {
-    background-color: #f7f7fa;
-    border: 1px solid #d7d9e0;
-    border-radius: 3px;
-    display: block;
-    position: relative;
-}
-
-.checkout-form .translation-selector-wrapper [type=radio]:checked + label::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
-    border: 5px solid #76a7e1;
-    z-index: 0;
-    border-radius: 3px;
-}
-
-.translation-selector-wrapper [type=radio]:checked + label::after {
-    display: inline-block;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    content: "";
-    background-image: svg-load(icons/mark.svg, fill=#fff);
-    background-position: center;
-    background-size: 65%;
-    background-color: #76a7e1;
-    background-repeat: no-repeat;
-    top: -10px;
-    right: -10px;
-    border-radius: 10px;
+.checkout-form .translation-selector-wrapper {
+    @mixin radio;
 }
 
 .checkout-form .upload-documents {
@@ -276,8 +317,9 @@ header {
 
 .upload-documents table {
     width: 100%;
-    border: 1px solid #d7d9e0;
+    border: 1px solid $border-color;
     padding: 15px;
+    margin-top: 15px;
 }
 
 .upload-documents table th {
@@ -287,23 +329,13 @@ header {
 
 .upload-file {
     display: inline-block;
-    background: #f7f7fa;
-    border: 1px solid #d7d9e0;
+    background: $light-background;
+    border: 1px solid $border-color;
     border-radius: 3px;
     padding: 15px 35px;
     text-transform: uppercase;
-}
 
-.upload-file::before {
-    content: '';
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    vertical-align: text-bottom;
-    background-image: svg-load(icons/upload.svg, fill=#a5abc5);
+    @mixin icon-inline upload, $text-color-lighter;
 }
 
 .remove {
@@ -312,19 +344,11 @@ header {
     display: inline-block;
     width: 15px;
     height: 15px;
-    background-image: svg-load(icons/trash.svg);
+    background-image: svg-load(icons/trash.svg, fill=$text-color-lighter);
 }
 
-a[href$=docx]::before {
-    content: '';
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-image: svg-load(icons/note.svg);
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    margin-right: 5px;
-    margin-bottom: -2px;
+a[href$=docx] {
+    @mixin icon-inline note, $text-color-lighter;
 }
 
 .checkout-form .desired-tone {
@@ -336,105 +360,85 @@ a[href$=docx]::before {
     justify-content: space-between;
     align-content: space-between;
 }
-.checkout-form .tone-selection-wrapper input[type=radio] {
-    display: none;
+.checkout-form .tone-selection-wrapper {
+    @mixin radio;
 }
 .checkout-form .tone-selection-wrapper label {
-    border: 1px solid #d7d9e0;
-    background: #f7f7fa;
-    border-radius: 3px;
     margin-right: auto;
-    flex-basis: 70%;
+    flex-basis: 72%;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 15px;
-    text-align: center;
-    position: relative;
 }
-.checkout-form .tone-selection-wrapper label::before {
-    content: '';
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    vertical-align: text-bottom;
+.checkout-form .tone-selection-wrapper label[for=translation-tone-friendly] {
+    @mixin icon-inline speech-bubble, $text-color;
 }
-.checkout-form .tone-selection-wrapper label[for=translation-tone-friendly]::before {
-    background-image: svg-load(icons/speech-bubble.svg, fill=#6e768f);
+.checkout-form .tone-selection-wrapper label[for=translation-tone-corporate] {
+    @mixin icon-inline briefcase, $text-color;
 }
-.checkout-form .tone-selection-wrapper label[for=translation-tone-corporate]::before {
-    background-image: svg-load(icons/briefcase.svg, fill=#6e768f);
+.checkout-form .tone-selection-wrapper label[for=translation-tone-media] {
+    @mixin icon-inline megaphone, $text-color;
 }
-.checkout-form .tone-selection-wrapper label[for=translation-tone-media]::before {
-    background-image: svg-load(icons/megaphone.svg, fill=#6e768f);
-}
-
-.checkout-form .tone-selection-wrapper [type=radio]:checked + label {
-    border: 5px solid #76a7e1;
-    box-sizing: border-box;
-    border-radius: 3px;
-}
-
-.checkout-form .tone-selection-wrapper [type=radio]:checked + label::after {
-    display: inline-block;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    content: "";
-    background-image: svg-load(icons/mark.svg, fill=#fff);
-    background-position: center;
-    background-size: 65%;
-    background-color: #76a7e1;
-    background-repeat: no-repeat;
-    top: -10px;
-    right: -10px;
-    border-radius: 10px;
-}
-
 
 .checkout-form .job-urgency {
     flex-basis: 55%;
 }
 .checkout-form .job-urgency input[type="range"] {
     display: block;
-    width: 100%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    outline: none;
+    &::after, &::before {
+      position: absolute;
+      top: 2px;
+      display: inline-block;
+      content: '';
+      border-radius: 50%;
+      border: 4px solid #d6d8e2;
+      background: #d6d8e2;
+      width: 1px;
+      height: 1px;
+      margin-top: -3px;
+    }
+    &::after {
+      right: -2px;
+    }
+    &::before {
+      left: -2px;
+    }
 }
-.checkout-form .job-urgency input[type="range"]::range-track {
+.checkout-form .job-urgency input[type="range"]::track {
     width: 100%;
     height: 8px;
-    border-radius: 3px;
+    border-radius: 5px;
     background: #eff0f5;
     border: 1px solid #eff0f5;
 }
 
-.checkout-form .job-urgency input[type="range"]::range-thumb {
+.checkout-form .job-urgency input[type="range"]::thumb {
     border-radius: 50%;
-    border: 10px solid #edbe76;
+    border: 6px solid #edbe76;
     background: #edbe76;
     width: 1px;
     height: 1px;
+    margin-top: -3px;
+}
+.checkout-form .job-urgency .range-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
 .timeline-info {
-    border: 1px solid #d7d9e0;
+    border: 1px solid $border-color;
     padding: 20px 30px 20px 50px;
 }
 .timeline-info h1 {
     display: block;
     text-transform: uppercase;
-    position: relative;
-}
-.timeline-info h1::before {
-    content: '';
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
-    background-image: svg-load(icons/info.svg, fill=#6e768f);
+    @mixin icon-outer info, $text-color;
 }
 .timeline-info strong {
     text-transform: uppercase;
@@ -467,7 +471,7 @@ a[href$=docx]::before {
     max-width: 100%;
     padding: 10px 40px 10px 20px;
     border-radius: 5px;
-    border: 1px solid #d7d9e0;
+    border: 1px solid $border-color;
     box-shadow: none;
     &:focus {
         outline: none;
@@ -485,37 +489,8 @@ a[href$=docx]::before {
     display: flex;
     justify-content: space-between;
 }
-.signup-payment .payment-selector-wrapper input[type=radio] {
-    display: none;
-}
-.signup-payment .payment-selector-wrapper label {
-    padding: 20px 30px;
-    border: 1px solid #d7d9e0;
-    border-radius: 3px;
-    background: #f7f7fa;
-    position: relative;
-}
-
-.signup-payment .payment-selector-wrapper [type=radio]:checked + label {
-    border: 5px solid #76a7e1;
-    box-sizing: border-box;
-    border-radius: 3px;
-}
-
-.signup-payment .payment-selector-wrapper [type=radio]:checked + label::after {
-    display: inline-block;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    content: "";
-    background-image: svg-load(icons/mark.svg, fill=#fff);
-    background-position: center;
-    background-size: 65%;
-    background-color: #76a7e1;
-    background-repeat: no-repeat;
-    top: -10px;
-    right: -10px;
-    border-radius: 10px;
+.signup-payment .payment-selector-wrapper {
+    @mixin radio;
 }
 
 .signup-payment .payment-selector-wrapper label[for=paypal] {
@@ -556,7 +531,7 @@ a[href$=docx]::before {
     text-transform: uppercase;
     border: 1px solid #c9d0e1;
     border-radius: 3px;
-    background: #f7f7fa;
+    background: $light-background;
     padding: 10px 20px;
 }
 
@@ -568,7 +543,7 @@ footer {
 }
 footer .footer-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;;
     flex-wrap: wrap;
     max-width: 940px;
     margin: 0 auto;
@@ -576,69 +551,27 @@ footer .footer-wrapper {
     padding-bottom: 70px;
 }
 footer section {
-    flex-grow: 1;
     flex-shrink: 0;
-    flex-basis: 0px;
+    flex-basis: 135px;
 }
 footer .about-us h1 {
-    position: relative;
-}
-footer .about-us h1::before {
-    content: '';
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
-    background-image: svg-load(icons/favorite.svg, fill=#fff);
+    @mixin icon-outer favorite, #fff;
 }
 
 footer .address h1 {
-    position: relative;
+    @mixin icon-outer compass, #fff;
 }
-footer .address h1::before {
-    content: '';
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
-    background-image: svg-load(icons/compass.svg, fill=#fff);
-}
-
 footer .connect h1 {
-    position: relative;
-}
-footer .connect h1::before {
-    content: '';
-    background-size: auto 100%;
-    position: absolute;
-    left: -28px;
-    top: -2px;
-    width: 24px;
-    height: 24px;
-    background-image: svg-load(icons/share.svg, fill=#fff);
+    @mixin icon-outer share, #fff;
 }
 
-.connect a::before {
-    content: '';
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    vertical-align: text-bottom;
-}
 
 .connect .facebook::before {
-    background-image: svg-load(icons/facebook.svg, fill=#a5abc5);
+    @mixin icon-inline facebook, $text-color-lighter;
 }
 .connect .twitter::before {
-    background-image: svg-load(icons/twitter.svg, fill=#a5abc5);
+  @mixin icon-inline twitter, $text-color-lighter;
 }
 .connect .linkedin::before {
-    background-image: svg-load(icons/linkedin.svg, fill=#a5abc5);
+    @mixin icon-inline linkedin, $text-color-lighter;
 }
