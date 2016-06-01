@@ -114,18 +114,30 @@
         <section class="language-pairings">
             <h1>Choose your language pairings</h1>
             <label>From</label>
-            <select class="language-selector">
-                <option value="en">English></option>
-            </select>
+            <div class="language-selector">
+              <select>
+                  <option value="en" selected>English</option>
+                  <option value="ar">Arabic</option>
+                  <option value="ku">Kurdish</option>
+              </select>
+            </div>
+            <br>
+            <br>
             <label>To</label>
-            <select class="language-selector">
-                <option value="ar">Arabic></option>
-                <option value="ku">Kurdish></option>
-            </select>
-            <select class="language-selector">
-                <option value="ar">Arabic></option>
-                <option value="ku">Kurdish></option>
-            </select>
+            <div class="language-selector">
+              <select>
+                  <option value="en">English</option>
+                  <option value="ar" selected>Arabic</option>
+                  <option value="ku">Kurdish</option>
+                </select>
+            </div>
+            <div class="language-selector">
+              <select>
+                  <option value="en">English</option>
+                  <option value="ar">Arabic</option>
+                  <option value="ku" selected>Kurdish</option>
+              </select>
+            </div>
             <button class="add-language">add</button>
         </section>
         <section class="desired-tone">
@@ -150,7 +162,7 @@
             <input type="range" min="0" max="2" value="1">
             <div class="range-labels">
               <label>i got time</label>
-              <label>average</label>
+              <label class="selected">average</label>
               <label>yesterday</label>
             </div>
             <section class="timeline-info">
@@ -164,15 +176,21 @@
             <p>Already have an account with us? <a href="/">Sign in</a>.</p>
             <div class="fullname-wrapper">
                 <label for="fullname">full name</label>
-                <input type="text" id="fullname" required>
+                <div class="validation-wrapper">
+                  <input type="text" id="fullname" required><span class="validity"></span>
+                </div>
             </div>
             <div class="email-wrapper">
                 <label for="email">email address</label>
-                <input type="email" id="email" required>
+                <div class="validation-wrapper">
+                  <input type="email" id="email" required><span class="validity"></span>
+                </div>
             </div>
             <div class="password-wrapper">
                 <label for="password">choose a password</label>
-                <input type="password" id="password" required>
+                <div class="validation-wrapper">
+                  <input type="password" id="password" required><span class="validity"></span>
+                </div>
             </div>
             <div class="payment-selector-wrapper">
                 <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked>
@@ -184,7 +202,9 @@
             </div>
             <div class="credit-card-wrapper">
                 <label for="credit-card-number">card number</label>
-                <input type="text" id="credit-card-number">
+                <div class="validation-wrapper">
+                  <input type="text" id="credit-card-number" pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}" required><span class="validity"></span>
+                </div>
             </div>
             <div class="expiry-date-wrapper">
                 <label for="expiry-date">expiry date</label>

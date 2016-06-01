@@ -57,10 +57,10 @@ header, main {
       background-size: cover;
       background-repeat: no-repeat;
       display: inline-block;
-      width: 15px;
-      height: 15px;
+      width: 1em;
+      height: 1em;
       margin-right: 10px;
-      vertical-align: text-bottom;
+      vertical-align: text-top;
       background-image: svg-load(icons/$(name).svg, fill=$color);
     }
 }
@@ -120,6 +120,51 @@ header, main {
   }
 }
 
+@define-mixin button $icon {
+  text-transform: uppercase;
+  color: $text-color-lighter;
+  border: 1px solid #c9d0e1;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 15px 35px;
+  background: $light-background;
+  @mixin icon-inline $icon, $text-color-lighter;
+}
+
+/***********/
+.validation-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.validation-wrapper input + .validity {
+  display: inline-block;
+  position: absolute;
+  right: 1em;
+  top: 0.75em;
+}
+.validation-wrapper input + .validity::after {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  content: "";
+  background-image: svg-load(icons/mark.svg, fill=#fff);
+  background-position: center;
+  background-size: 65%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+.validation-wrapper input:invalid + .validity::after {
+  background-color: #E17776;
+  background-size: 50%;
+  background-image: svg-load(icons/x-mark.svg, fill=#fff);
+
+}
+.validation-wrapper input:valid + .validity::after {
+  background-color: #76A7E1;
+}
+
+
 /********/
 
 header {
@@ -128,27 +173,15 @@ header {
     align-items: center;
     height: 225px;
 }
-
-.go-back, .sign-in {
-    text-transform: uppercase;
-    color: $text-color-lighter;
-    border: 1px solid #c9d0e1;
-    border-radius: 3px;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 15px 35px;
-}
 .go-back {
-  @mixin icon-inline arrow, $text-color-lighter;
+  @mixin button arrow;
 }
 .sign-in {
-  @mixin icon-inline user, $text-color-lighter;
+  @mixin button user;
 }
 .go-back::before {
     transform: scaleX(-1);
 }
-
-/********/
 
 .checkout-form {
     display: flex;
@@ -351,6 +384,52 @@ a[href$=docx] {
     @mixin icon-inline note, $text-color-lighter;
 }
 
+.checkout-form .language-pairings label {
+    text-transform: uppercase;
+    width: 30px;
+    margin-right: 15px;
+    text-align: right;
+    display: inline-block;
+}
+
+.checkout-form .language-pairings .language-selector {
+  display: inline-block;
+  position: relative;
+  margin-right: 15px;
+  &::after {
+    position: absolute;
+    height: 100%;
+    display: inline-block;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    border-left: 1px solid $border-color;
+    transform: scaleY(-1);
+    content: '';
+    background-image: svg-load(icons/triangle.svg, fill=$text-color-lighter);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 5px auto;
+  }
+}
+
+.checkout-form .language-pairings select {
+    appearance: none;
+    color: $text-color-lighter;
+    width: 140px;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    background-color: $light-background;
+    padding: 15px 45px 15px 15px;
+    text-align-last:center;
+    outline: none;
+}
+
+.checkout-form .language-pairings .add-language {
+  @mixin button plus;
+}
+
 .checkout-form .desired-tone {
     flex-basis: 40%;
 }
@@ -429,6 +508,11 @@ a[href$=docx] {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+.checkout-form .job-urgency .range-labels .selected {
+  color: #edbe76;
 }
 
 .timeline-info {
@@ -463,6 +547,12 @@ a[href$=docx] {
     text-transform: uppercase;
     padding-left: 5px;
 }
+
+.signup-payment [class$=wrapper]:not(.validation-wrapper) {
+  margin-bottom: 20px;
+  position: relative;
+}
+
 .signup-payment input[type=text],
 .signup-payment input[type=email],
 .signup-payment input[type=password],
@@ -564,14 +654,18 @@ footer .address h1 {
 footer .connect h1 {
     @mixin icon-outer share, #fff;
 }
+footer .connect ul {
+  list-style: none;
+  padding: 0;
+}
 
 
-.connect .facebook::before {
+.connect .facebook {
     @mixin icon-inline facebook, $text-color-lighter;
 }
-.connect .twitter::before {
+.connect .twitter {
   @mixin icon-inline twitter, $text-color-lighter;
 }
-.connect .linkedin::before {
+.connect .linkedin {
     @mixin icon-inline linkedin, $text-color-lighter;
 }
