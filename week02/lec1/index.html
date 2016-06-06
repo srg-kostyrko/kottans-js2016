@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order form</title>
 <link href="styles/main.min.css" rel="stylesheet">
 <header>
@@ -159,11 +160,11 @@
         </section>
         <section class="job-urgency">
             <h1>Tell us how urgent this job is</h1>
-            <input type="range" min="0" max="2" value="1">
+            <input type="range" min="0" max="2" value="1" id="job-urgency">
             <div class="range-labels">
-              <label>i got time</label>
-              <label class="selected">average</label>
-              <label>yesterday</label>
+              <label data-value=0>i got time</label>
+              <label class="selected" data-value=1>average</label>
+              <label data-value=2>yesterday</label>
             </div>
             <section class="timeline-info">
                 <h1>timeline info</h1>
@@ -203,7 +204,8 @@
             <div class="credit-card-wrapper">
                 <label for="credit-card-number">card number</label>
                 <div class="validation-wrapper">
-                  <input type="text" id="credit-card-number" pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}" required><span class="validity"></span>
+                  <input type="text" id="credit-card-number" pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}" autocompletetype="cc-number">
+                  <span class="card-mark"></span>
                 </div>
             </div>
             <div class="expiry-date-wrapper">
@@ -212,7 +214,7 @@
             </div>
             <div class="cvv-code-wrapper">
                 <label for="expiry-date">code</label>
-                <input type="password" id="cvv-code">
+                <input type="password" id="cvv-code" autocomplete="off">
             </div>
         </section>
         <section class="order-submitting">
@@ -249,7 +251,9 @@
             </ul>
         </section>
         <section class="logo">
-            <img src="img/logo.jpg" alt="logo">
+            <img src="img/logo-footer.jpg" alt="logo">
         </section>
     </div>
 </footer>
+<script src=node_modules/payment/lib/payment.js></script>
+<script src=js/form.js></script>

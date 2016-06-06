@@ -17,6 +17,9 @@ section {
 input[type="range"], input[type="range"]::track, input[type="range"]::thumb {
     appearance: none;
 }
+input {
+    box-sizing: border-box;
+}
 
 /********** vars **********/
 
@@ -196,6 +199,11 @@ header {
     flex-basis: 100%;
     padding: 20px 30px 20px 90px;
     counter-increment: section;
+    @media (max-width: 768px) {
+      & {
+        padding: 50px 30px 20px 20px;
+      }
+    }
 }
 
 .checkout-form > section > h1 {
@@ -219,6 +227,12 @@ header {
     box-sizing: border-box;
     padding-top: 7px;
     font-size: 12px;
+    @media (max-width: 768px) {
+      & {
+        left: 7px;
+        top: -55px;
+      }
+    }
 }
 
 .checkout-form .order-details {
@@ -444,7 +458,7 @@ a[href$=docx] {
 }
 .checkout-form .tone-selection-wrapper label {
     margin-right: auto;
-    flex-basis: 72%;
+    flex-basis: 73%;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 15px;
@@ -469,24 +483,6 @@ a[href$=docx] {
     margin-right: auto;
     position: relative;
     outline: none;
-    &::after, &::before {
-      position: absolute;
-      top: 2px;
-      display: inline-block;
-      content: '';
-      border-radius: 50%;
-      border: 4px solid #d6d8e2;
-      background: #d6d8e2;
-      width: 1px;
-      height: 1px;
-      margin-top: -3px;
-    }
-    &::after {
-      right: -2px;
-    }
-    &::before {
-      left: -2px;
-    }
 }
 .checkout-form .job-urgency input[type="range"]::track {
     width: 100%;
@@ -530,7 +526,7 @@ a[href$=docx] {
 }
 
 .checkout-form .signup-payment {
-    flex-basis: 70%;
+    flex-basis: 75%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -557,9 +553,9 @@ a[href$=docx] {
 .signup-payment input[type=email],
 .signup-payment input[type=password],
 .signup-payment input[type=date] {
-    min-width: 200px;
+    min-width: 265px;
     max-width: 100%;
-    padding: 10px 40px 10px 20px;
+    padding: 10px 20px;
     border-radius: 5px;
     border: 1px solid $border-color;
     box-shadow: none;
@@ -568,6 +564,10 @@ a[href$=docx] {
         box-shadow: none;
     }
 }
+.validation-wrapper input {
+  padding: 10px 40px 10px 20px;
+}
+
 .signup-payment .fullname-wrapper {
     flex-basis: 100%;
 }
@@ -583,23 +583,68 @@ a[href$=docx] {
     @mixin radio;
 }
 
+.signup-payment .payment-selector-wrapper label {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .signup-payment .payment-selector-wrapper label[for=paypal] {
     margin-left: 10px;
     margin-right: 10px;
 }
 .signup-payment .payment-selector-wrapper label img {
     max-width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .signup-payment .credit-card-wrapper {
     flex-grow: 3;
+    flex-basis: 50%;
+    input[type=text] {
+      min-width: 280px;
+    }
+    .card-mark {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      right: 4px;
+      background: $border-color;
+      border: 1px solid $border-color;
+      border-radius: 3px;
+      display: none;
+      color: #fff;
+      padding: 7px;
+      vertical-align: middle;
+    }
+    .visa + .card-mark {
+      display: inline-block;
+      &::before {
+        content: "VISA";
+      }
+    }
 }
 .signup-payment .expiry-date-wrapper {
     flex-grow: 2;
+    flex-basis: 24%;
+    & input[type=date] {
+      min-width: 120px;
+      max-width: 120px;
+      padding-right: 0;
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
 }
 .signup-payment .cvv-code-wrapper {
     flex-grow: 0;
     flex-shrink: 1;
+    flex-basis: 15%;
+    & input[type=password] {
+      max-width: 60px;
+      min-width: 60px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 }
 
 .order-submitting {
@@ -633,7 +678,7 @@ footer {
 }
 footer .footer-wrapper {
     display: flex;
-    justify-content: space-around;;
+    justify-content: space-around;
     flex-wrap: wrap;
     max-width: 940px;
     margin: 0 auto;
@@ -642,12 +687,20 @@ footer .footer-wrapper {
 }
 footer section {
     flex-shrink: 0;
-    flex-basis: 135px;
+    flex-basis: 170px;
+    padding-left: 2em;
+    flex-grow: 1;
+}
+footer section h1 {
+  text-transform: uppercase;
 }
 footer .about-us h1 {
     @mixin icon-outer favorite, #fff;
 }
-
+footer .address address {
+  display: inline-block;;
+  margin-top: 1em;
+}
 footer .address h1 {
     @mixin icon-outer compass, #fff;
 }
@@ -668,4 +721,107 @@ footer .connect ul {
 }
 .connect .linkedin {
     @mixin icon-inline linkedin, $text-color-lighter;
+}
+
+@media only screen and (max-width: 760px) {
+  button, [role=button] {
+    margin-bottom: 5px;
+  }
+  body {
+    flex-direction: column;
+  }
+  header {
+    flex-direction: column;
+  }
+  .checkout-form .order-details {
+    flex-basis: 100%;
+    flex-direction: row;
+    height: auto;
+  }
+  .checkout-form .help-center {
+    flex-basis: 100%;
+  }
+  .checkout-form .order-details h1 {
+    width: auto;
+  }
+  .checkout-form .order-details dl {
+    height: auto;
+  }
+  .checkout-form .translation-selector-wrapper {
+    flex-direction: column;
+  }
+  footer .footer-wrapper {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  footer section {
+    flex-basis: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .checkout-form .tone-selection-wrapper label {
+    flex-basis: 100%;
+  }
+  .checkout-form .desired-tone, .checkout-form .job-urgency {
+    flex-basis: 100%;
+  }
+  .signup-payment input[type=date], .signup-payment input[type=email], .signup-payment input[type=password], .signup-payment input[type=text] {
+    min-width: 205px;
+  }
+  .payment-selector-wrapper {
+    flex-direction: column;
+  }
+  .signup-payment .credit-card-wrapper input[type=text] {
+    min-width: 205px;
+  }
+  .checkout-form .translation-selector-wrapper label {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  .checkout-form .language-pairings .language-selector {
+    margin-bottom: 10px;
+  }
+  .checkout-form .signup-payment {
+    flex-basis: 100%;
+  }
+  .signup-payment .payment-selector-wrapper {
+    flex-direction: column;
+  }
+  .signup-payment .payment-selector-wrapper label {
+    margin-bottom: 10px;
+  }
+  .signup-payment .payment-selector-wrapper label[for=paypal] {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .signup-payment .credit-card-wrapper input[type=text] {
+    min-width: inherit;
+  }
+}
+@media
+	only screen and (max-width: 760px),
+	(min-device-width: 768px) and (max-device-width: 1024px)  {
+    .upload-documents {
+      table {
+        box-sizing: border-box;
+      }
+      table, thead, tbody, th, td, tr {
+  			display: block;
+  		}
+      thead tr {
+  			position: absolute;
+  			top: -9999px;
+  			left: -9999px;
+  		}
+
+  		td {
+  			/* Behave  like a "row" */
+  			border: none;
+        position: relative;
+  		}
+
+      tr {
+        padding-bottom: 15px;
+      }
+    }
 }

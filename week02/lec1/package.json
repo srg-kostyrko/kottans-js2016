@@ -20,5 +20,8 @@
     "postcss-mixins": "^4.0.2",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^2.0.0"
+  },
+  "dependencies": {
+    "payment": "^1.0.4"
   }
 }
