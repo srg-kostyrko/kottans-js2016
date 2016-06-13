@@ -3,9 +3,32 @@ class TypeError extends Error {}
 class RangeError extends Error {}
 
 class ExtendedPromise extends Promise {
-  static map(input) {
+  static map(input, mapper) {
     return new this((resolve, reject) => {
-      reject('test');
+      let results = [];
+      Promise.resolve(input).then((iterable) => {
+        if (!Array.isArray(iterable)) {
+          resolve([]);
+          return;
+        }
+        const inputLength = iterable.length;
+        const resolveProcessor = index => (val) => {
+          Promise.resolve(mapper(val, index))
+            .then((val) => {
+              results.push(val);
+              if (results.length == inputLength) {
+                resolve(results);
+              }
+            });
+        }
+
+        let index = 0;
+        for (let value of iterable) {
+          Promise.resolve(value).then(resolveProcessor(index)).catch((err) => reject(err));
+          index++;
+        }
+      })
+      .catch((err) => reject(err));
     });
   }
   static some(input, count) {

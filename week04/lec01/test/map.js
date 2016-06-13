@@ -10,7 +10,9 @@ describe("Promise.map-test", function () {
     }
 
     function deferredMapper(val) {
-        return Promise.delay(1, mapper(val));
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(mapper(val)), 1);
+        });
     }
 
     specify("should map input values array", function() {
@@ -63,8 +65,7 @@ describe("Promise.map-test", function () {
     });
 
     specify("should resolve to empty array when input promise does not resolve to an array", function() {
-        return ExtendedPromise.map(Promise.resolve(123), mapper).caught(TypeError, function(e){
-        });
+        return ExtendedPromise.map(Promise.resolve(123), mapper).catch((e) => assert(e instanceof TypeError));
     });
 
     specify("should map input promises when mapper returns a promise", function() {
@@ -97,7 +98,9 @@ describe("Promise.map-test with concurrency", function () {
     }
 
     function deferredMapper(val) {
-        return Promise.delay(1, mapper(val));
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(mapper(val)), 1);
+        });
     }
 
     specify("should map input values array with concurrency", function() {
@@ -150,8 +153,7 @@ describe("Promise.map-test with concurrency", function () {
     });
 
     specify("should resolve to empty array when input promise does not resolve to an array with concurrency", function() {
-        return ExtendedPromise.map(Promise.resolve(123), mapper, concurrency).caught(TypeError, function(e){
-        });
+        return ExtendedPromise.map(Promise.resolve(123), mapper, concurrency).catch((e) => asset(e instanceof TypeError));
     });
 
     specify("should map input promises when mapper returns a promise with concurrency", function() {
@@ -209,18 +211,23 @@ describe("Promise.map-test with concurrency", function () {
                 b.push(value);
             });
         }, {concurrency: 5});
+        const delay = (time) => {
+          return new Promise((resolve) => {
+            setTimeout(() => resolve(), time);
+          });
+        }
 
-        var ret2 = Promise.delay(100).then(function() {
+        var ret2 = delay(100).then(function() {
             assert.strictEqual(0, b.length);
             immediates.forEach(resolve);
             return immediates.map(function(item){return item[0]});
-        }).delay(100).then(function() {
+        }).then(delay(100)).then(function() {
             assert.deepEqual(b, [0, 1, 2, 3, 4]);
             lates.forEach(resolve);
-        }).delay(100).then(function() {
+        }).then(delay(100)).then(function() {
             assert.deepEqual(b, [0, 1, 2, 3, 4, 10, 9, 8, 7, 6 ]);
             lates.forEach(resolve);
-        }).thenReturn(ret1).then(function() {
+        }).then(() => ret1).then(function() {
             assert.deepEqual(b, [0, 1, 2, 3, 4, 10, 9, 8, 7, 6, 5]);
         });
         return Promise.all([ret1, ret2]);
