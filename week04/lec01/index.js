@@ -3,6 +3,7 @@ class TypeError extends Error {}
 class RangeError extends Error {}
 
 class ExtendedPromise extends Promise {
+
   static map(input, mapper) {
     return new this((resolve, reject) => {
       let results = [];
@@ -84,9 +85,54 @@ class ExtendedPromise extends Promise {
       }).catch(err => reject(err));
     });
   }
-  static reduce(input){
+  static reduce(input, reducer, initial) {
     return new this((resolve, reject) => {
-      reject('test');
+      Promise.resolve(input).then((iterable) => {
+        if (!Array.isArray(iterable)) {
+          resolve(initial);
+          return;
+        }
+        Promise.resolve(initial).then((initial)=> {
+          const inputLength = iterable.length;
+          let result = initial;
+          if (inputLength == 0) {
+            resolve(initial);
+            return;
+          }
+          let index = 0;
+
+
+          const processValue = (val) => {
+            result = val;
+            index++;
+            if (index == inputLength) {
+              resolve(result);
+            } else {
+              startNext();
+            }
+          }
+          const resolveProcessor = (val) => {
+            Promise.resolve(val).then((val) => {
+              if (result === void 0 && index == 0) {
+                processValue(val);
+              } else {
+                Promise.resolve(reducer(result, val, index, inputLength))
+                .then((reducedValue) => {
+                  processValue(reducedValue);
+                }).catch(err => reject(err));
+              }
+            }).catch(err => reject(err));
+          }
+          const startNext = () => {
+            Promise.resolve(iterable[index])
+            .then(resolveProcessor)
+            .catch((err) => reject(err));
+          }
+
+          startNext();
+        }).catch((err) => reject(err));
+      })
+      .catch((err) => reject(err));
     });
   }
 }

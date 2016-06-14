@@ -90,52 +90,13 @@ var VALUES_CRITERIA = [
     ], total: 10, desc: "and a blend of values" },
 ];
 
+const delay = (time, value) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(value), time);
+  });
+}
+
 var ERROR = new Error("BOOM");
-
-
-describe("Promise.prototype.reduce", function() {
-    it("works with no values", function() {
-        return Promise.resolve([]).reduce(function(total, value) {
-            return total + value + 5;
-        }).then(function(total) {
-            assert.strictEqual(total, undefined);
-        });
-    });
-
-    it("works with a single value", function() {
-        return Promise.resolve([ 1 ]).reduce(function(total, value) {
-            return total + value + 5;
-        }).then(function(total) {
-            assert.strictEqual(total, 1);
-        });
-    });
-
-    it("works when the iterator returns a value", function() {
-        return Promise.resolve([ 1, 2, 3 ]).reduce(function(total, value) {
-            return total + value + 5;
-        }).then(function(total) {
-            assert.strictEqual(total, (1 + 2+5 + 3+5));
-        });
-    });
-
-    it("works when the iterator returns a Promise", function() {
-        return Promise.resolve([ 1, 2, 3 ]).reduce(function(total, value) {
-            return promised(5).then(function(bonus) {
-                return total + value + bonus;
-            });
-        }).then(function(total) {
-            assert.strictEqual(total, (1 + 2+5 + 3+5));
-        });
-    });
-
-    it("works when the iterator returns a thenable", function() {
-        return Promise.resolve([ 1, 2, 3 ]).reduce(function(total, value) {
-            return thenabled(total + value + 5);
-        }).then(function(total) {
-            assert.strictEqual(total, (1 + 2+5 + 3+5));
-        });
-    });
-});
 
 
 describe("Promise.reduce", function() {
@@ -312,6 +273,7 @@ describe("Promise.reduce", function() {
     describe("with a 0th value acting as an accumulator", function() {
         it("acts this way when an accumulator value is provided yet `undefined`", function() {
             return ExtendedPromise.reduce([ 1, 2, 3 ], function(total, value) {
+              console.log(total, value);
                 return ((total === void 0) ? 0 : total) + value + 5;
             }, undefined).then(function(total){
                 assert.strictEqual(total, (1 + 2+5 + 3+5));
@@ -430,7 +392,7 @@ describe("Promise.reduce-test", function () {
     }
 
     function later(val) {
-        return Promise.delay(1, val);
+        return delay(1, val);
     }
 
 
@@ -502,7 +464,7 @@ describe("Promise.reduce-test", function () {
     });
 
     specify("should reduce empty input with eventual promise", function() {
-        return ExtendedPromise.reduce([], plus, Promise.delay(1, 1)).then(
+        return ExtendedPromise.reduce([], plus, delay(1, 1)).then(
             function(result) {
                 assert.deepEqual(result, 1);
             },
@@ -560,7 +522,8 @@ describe("Promise.reduce-test", function () {
     });
 
     specify("should resolve to initialValue Promise input promise does not resolve to an array", function() {
-        return ExtendedPromise.reduce(Promise.resolve(123), plus, 1).caught(TypeError, function(e){
+        return ExtendedPromise.reduce(Promise.resolve(123), plus, 1).catch(function(e){
+          assert(e instanceof TypeError);
         });
     });
 
@@ -580,7 +543,7 @@ describe("Promise.reduce-test", function () {
 
     describe("checks", function() {
         function later(val, ms) {
-            return Promise.delay(ms, val);
+            return delay(ms, val);
         }
 
         function plus(sum, val) {
@@ -588,7 +551,7 @@ describe("Promise.reduce-test", function () {
         }
 
         function plusDelayed(sum, val) {
-            return Promise.delay(0).then(function() {
+            return delay(0).then(function() {
                 return sum + val;
             });
         }
